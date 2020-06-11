@@ -1,16 +1,17 @@
 package com.abhishek.dicerollerchallenge
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import com.abhishek.dicerollerchallenge.R.drawable
 import com.abhishek.dicerollerchallenge.R.id
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var rollButton: Button
-    lateinit var countButton: Button
-    lateinit var resultText: TextView
+    lateinit var diceImage: ImageView
+    lateinit var diceImage2: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,33 +19,28 @@ class MainActivity : AppCompatActivity() {
         uiInit()
 
         rollButton.setOnClickListener { rollDice() }
-        countButton.setOnClickListener { countUp() }
     }
 
     private fun uiInit() {
         rollButton = findViewById(id.roll_button)
-        countButton = findViewById(id.countup_button)
-        resultText = findViewById(id.result_text)
+        diceImage = findViewById(id.dice_image)
+        diceImage2 = findViewById(id.dice_image_2)
     }
 
     private fun rollDice() {
-        val randomInt= (1..6).random()
-
-        resultText.text = randomInt.toString()
+        diceImage.setImageResource(getRandomDiceImage((1..6).random()))
+        diceImage2.setImageResource(getRandomDiceImage((1..6).random()))
     }
 
-    private fun countUp() {
-
-        if (resultText.text == "Hello World!") {
-            resultText.text = "1"
-        } else {
-            var resultInt = resultText.text.toString().toInt()
-
-            if (resultInt != 6) {
-                resultInt++
-                resultText.text = resultInt.toString()
-            }
+    private fun getRandomDiceImage(randomInt: Int): Int {
+        val drawableResource = when (randomInt) {
+            1 -> drawable.dice_1
+            2 -> drawable.dice_2
+            3 -> drawable.dice_3
+            4 -> drawable.dice_4
+            5 -> drawable.dice_5
+            else -> drawable.dice_6
         }
+        return drawableResource
     }
-
 }
